@@ -1,5 +1,5 @@
 ﻿// OsmSharp - OpenStreetMap (OSM) SDK
-// Copyright (C) 2015 Abelshausen Ben
+// Copyright (C) 2016 Abelshausen Ben
 // 
 // This file is part of OsmSharp.
 // 
@@ -23,19 +23,19 @@ using OsmSharp.Routing;
 using OsmSharp.Routing.Profiles;
 using System.Collections.Generic;
 
-namespace OsmSharp.Logistics.API.Instances
+namespace OsmSharp.Logistics.API.TSP.Instances
 {
     /// <summary>
     /// A default routing module instance implemenation.
     /// </summary>
-    public class DefaultRoutingModuleInstance : IRoutingModuleInstance
+    public class DefaultTSPModuleInstance : ITSPModuleInstance
     {
         private readonly IRouter _router;
 
         /// <summary>
         /// Creates a new default routing instance.
         /// </summary>
-        public DefaultRoutingModuleInstance(IRouter router)
+        public DefaultTSPModuleInstance(IRouter router)
         {
             _router = router;
         }
@@ -51,7 +51,7 @@ namespace OsmSharp.Logistics.API.Instances
         /// <summary>
         /// Calculates a route along the given locations.
         /// </summary>
-        public Result<Route> Calculate(Profile profile, ICoordinate[] locations, 
+        public Result<Route> Calculate(Profile profile, ICoordinate[] locations,
             Dictionary<string, object> parameters)
         {
             var routerPoints = new RouterPoint[locations.Length];
@@ -71,11 +71,11 @@ namespace OsmSharp.Logistics.API.Instances
         /// <summary>
         /// Calculates a route along the given locations and returns it's geometry.
         /// </summary>
-        public Result<Feature> CalculateGeometry(Profile profile, ICoordinate[] locations, 
+        public Result<Feature> CalculateGeometry(Profile profile, ICoordinate[] locations,
             Dictionary<string, object> parameters)
         {
             var routerPoints = new RouterPoint[locations.Length];
-            for(var i = 0; i < routerPoints.Length; i++)
+            for (var i = 0; i < routerPoints.Length; i++)
             {
                 var resolveResult = _router.TryResolve(profile, locations[i], 500);
                 if (resolveResult.IsError)
@@ -86,13 +86,13 @@ namespace OsmSharp.Logistics.API.Instances
             }
 
             var result = _router.TryCalculate(profile, routerPoints);
-            if(result.IsError)
+            if (result.IsError)
             {
                 return result.ConvertError<Feature>();
             }
 
             var lineString = result.Value.ToLineString();
-            return new Result<Feature>(new Feature(lineString, 
+            return new Result<Feature>(new Feature(lineString,
                 new Geo.Attributes.SimpleGeometryAttributeCollection(
                     new Tag[] {
                         new Tag("time", result.Value.TotalTime.ToInvariantString()),

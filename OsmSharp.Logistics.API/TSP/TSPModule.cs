@@ -25,25 +25,25 @@ using OsmSharp.Routing.Profiles;
 using System;
 using System.Collections.Generic;
 
-namespace OsmSharp.Logistics.API
+namespace OsmSharp.Logistics.API.TSP
 {
     /// <summary>
-    /// The routing module.
+    /// The TSP module.
     /// </summary>
-    public class RoutingModule : NancyModule
+    public class TSPModule : NancyModule
     {
         /// <summary>
         /// Creates a new routing module.
         /// </summary>
-        public RoutingModule()
+        public TSPModule()
         {
             JsonSettings.MaxJsonLength = Int32.MaxValue;
 
-            Get["{instance}/routing"] = _ =>
+            Get["{instance}/tsp"] = _ =>
             {
                 return this.DoRouting(_);
             };
-            Put["{instance}/routing"] = _ =>
+            Put["{instance}/tsp"] = _ =>
             {
                 return this.DoRouting(_);
             };
@@ -60,14 +60,14 @@ namespace OsmSharp.Logistics.API
                 this.EnableCors();
 
                 // validate requests.
-                if(!Bootstrapper.ValidateRequest(this, _))
+                if (!Bootstrapper.ValidateRequest(this, _))
                 {
                     return Negotiate.WithStatusCode(HttpStatusCode.Forbidden);
                 }
 
                 // get instance and check if active.
                 string instance = _.instance;
-                if (!RoutingBootstrapper.IsActive(instance))
+                if (!TSPBootstrapper.IsActive(instance))
                 { // oeps, instance not active!
                     return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
                 }
@@ -75,7 +75,7 @@ namespace OsmSharp.Logistics.API
                 // try and get all this data from the request-data.
                 GeoCoordinate[] coordinates = null;
                 var profile = OsmSharp.Routing.Osm.Vehicles.Vehicle.Car.Fastest();
-                var sort = false;
+                var closed = false;
                 var fullFormat = false;
 
                 // bind the query if any.
@@ -117,9 +117,9 @@ namespace OsmSharp.Logistics.API
                         return Negotiate.WithStatusCode(HttpStatusCode.NotAcceptable).WithModel(
                             string.Format("Profile with name '{0}' not found.", profileName));
                     }
-                    if (!string.IsNullOrWhiteSpace(urlParameterRequest.sort))
+                    if (!string.IsNullOrWhiteSpace(urlParameterRequest.closed))
                     { // there is a sort flag.
-                        sort = urlParameterRequest.sort.ToLowerInvariant() == "true";
+                        closed = urlParameterRequest.closed.ToLowerInvariant() == "true";
                     }
 
                     if (!string.IsNullOrWhiteSpace(urlParameterRequest.format))
@@ -157,17 +157,19 @@ namespace OsmSharp.Logistics.API
                     { // there is a format field.
                         fullFormat = request.format == "osmsharp";
                     }
+
+                    closed = request.closed;
                 }
 
                 // check for support for the given vehicle.
-                if (!RoutingBootstrapper.Get(instance).Supports(profile))
+                if (!TSPBootstrapper.Get(instance).Supports(profile))
                 { // vehicle is not supported.
                     return Negotiate.WithStatusCode(HttpStatusCode.NotAcceptable).WithModel(
                         string.Format("Profile with name '{0}' is unsupported by this instance.", profile.Name));
                 }
 
                 // calculate route.
-                var route = RoutingBootstrapper.Get(instance).Calculate(profile, coordinates, new Dictionary<string,object>());
+                var route = TSPBootstrapper.Get(instance).Calculate(profile, coordinates, new Dictionary<string, object>());
                 if (route == null ||
                     route.IsError)
                 { // route could not be calculated.

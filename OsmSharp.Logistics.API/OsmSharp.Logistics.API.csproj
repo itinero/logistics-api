@@ -117,14 +117,14 @@
     <Compile Include="NancyExtensions.cs" />
     <Compile Include="Responses\GeoJsonResponse.cs" />
     <Compile Include="Responses\GeoJsonResponseProcessor.cs" />
-    <Compile Include="Domain\Profile.cs" />
-    <Compile Include="Domain\Request.cs" />
-    <Compile Include="Domain\UrlParametersRequest.cs" />
-    <Compile Include="Instances\DefaultRoutingModuleInstance.cs" />
-    <Compile Include="IRoutingModuleInstance.cs" />
-    <Compile Include="RoutingBootstrapper.cs" />
-    <Compile Include="RoutingModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TSP\Domain\Profile.cs" />
+    <Compile Include="TSP\Domain\Request.cs" />
+    <Compile Include="TSP\Domain\UrlParametersRequest.cs" />
+    <Compile Include="TSP\Instances\DefaultTSPModuleInstance.cs" />
+    <Compile Include="TSP\ITSPModuleInstance.cs" />
+    <Compile Include="TSP\TSPBootstrapper.cs" />
+    <Compile Include="TSP\TSPModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

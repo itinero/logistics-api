@@ -1,5 +1,5 @@
 ﻿// OsmSharp - OpenStreetMap (OSM) SDK
-// Copyright (C) 2015 Abelshausen Ben
+// Copyright (C) 2016 Abelshausen Ben
 // 
 // This file is part of OsmSharp.
 // 
@@ -16,18 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with OsmSharp. If not, see <http://www.gnu.org/licenses/>.
 
-namespace OsmSharp.Logistics.API.Domain
+namespace OsmSharp.Logistics.API.TSP.Domain
 {
-    class UrlParametersRequest
+    class Request
     {
-        public string loc { get; set; }
-
-        public string profile { get; set; }
-
-        public string sort { get; set; }
-
+        public double[][] locations { get; set; }
+        public Profile profile { get; set; }
         public string format { get; set; }
-
-        public string aggregate { get; set; }
+        public bool closed { get; set; }
     }
 }

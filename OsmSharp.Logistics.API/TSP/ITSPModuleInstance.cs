@@ -1,5 +1,5 @@
 ﻿// OsmSharp - OpenStreetMap (OSM) SDK
-// Copyright (C) 2015 Abelshausen Ben
+// Copyright (C) 2016 Abelshausen Ben
 // 
 // This file is part of OsmSharp.
 // 
@@ -18,16 +18,16 @@
 
 using OsmSharp.Geo;
 using OsmSharp.Geo.Features;
-using OsmSharp.Routing;
 using OsmSharp.Routing.Profiles;
+using OsmSharp.Routing;
 using System.Collections.Generic;
 
-namespace OsmSharp.Logistics.API
+namespace OsmSharp.Logistics.API.TSP
 {
     /// <summary>
-    /// Abstract representation of the routing module functionality.
+    /// Abstract representation of all functionality needed for an instance of the TSP-module to function.
     /// </summary>
-    public interface IRoutingModuleInstance
+    public interface ITSPModuleInstance
     {
         /// <summary>
         /// Returns true if the given profile is supported.
@@ -37,13 +37,13 @@ namespace OsmSharp.Logistics.API
         /// <summary>
         /// Calculates a route along the given locations.
         /// </summary>
-        Result<Route> Calculate(Profile profile, ICoordinate[] locations, 
+        Result<Route> Calculate(Profile profile, ICoordinate[] locations,
             Dictionary<string, object> parameters);
 
         /// <summary>
         /// Calculates a route along the given locations and returns it's geometry.
         /// </summary>
-        Result<Feature> CalculateGeometry(Profile profile, ICoordinate[] locations, 
+        Result<Feature> CalculateGeometry(Profile profile, ICoordinate[] locations,
             Dictionary<string, object> parameters);
     }
 }

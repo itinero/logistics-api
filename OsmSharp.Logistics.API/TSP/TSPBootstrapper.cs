@@ -1,5 +1,5 @@
 ﻿// OsmSharp - OpenStreetMap (OSM) SDK
-// Copyright (C) 2015 Abelshausen Ben
+// Copyright (C) 2016 Abelshausen Ben
 // 
 // This file is part of OsmSharp.
 // 
@@ -18,18 +18,18 @@
 
 using System.Collections.Generic;
 
-namespace OsmSharp.Logistics.API
+namespace OsmSharp.Logistics.API.TSP
 {
     /// <summary>
-    /// The bootstrapper for the routing module.
+    /// The bootstrapper for the TSP module.
     /// </summary>
-    public class RoutingBootstrapper
+    public class TSPBootstrapper
     {
         /// <summary>
-        /// Holds the routing service instances.
+        /// Holds the service instances.
         /// </summary>
-        private static Dictionary<string, IRoutingModuleInstance> _instances =
-            new Dictionary<string, IRoutingModuleInstance>();
+        private static Dictionary<string, ITSPModuleInstance> _instances =
+            new Dictionary<string, ITSPModuleInstance>();
 
         /// <summary>
         /// Returns true if the given instance is active.
@@ -42,7 +42,7 @@ namespace OsmSharp.Logistics.API
         /// <summary>
         /// Returns the routing module instance with the given name.
         /// </summary>
-        public static IRoutingModuleInstance Get(string name)
+        public static ITSPModuleInstance Get(string name)
         {
             return _instances[name];
         }
@@ -50,7 +50,7 @@ namespace OsmSharp.Logistics.API
         /// <summary>
         /// Registers a new instance.
         /// </summary>
-        public static void Register(string name, IRoutingModuleInstance instance)
+        public static void Register(string name, ITSPModuleInstance instance)
         {
             _instances[name] = instance;
         }

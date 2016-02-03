@@ -81,8 +81,8 @@ namespace OsmSharp.Logistics.API
                     router.ProfileFactorCache = new OsmSharp.Routing.Profiles.ProfileFactorCache(router.Db);
                     router.ProfileFactorCache.CalculateFor(Vehicle.Car.Fastest());
 
-                    RoutingBootstrapper.Register(instanceConfiguration.Name,
-                        new Instances.DefaultRoutingModuleInstance(router));
+                    TSP.TSPBootstrapper.Register(instanceConfiguration.Name,
+                        new TSP.Instances.DefaultTSPModuleInstance(router));
 
                     OsmSharp.Logging.Log.TraceEvent("Bootstrapper", OsmSharp.Logging.TraceEventType.Information,
                         string.Format("Instance {0} created successfully!", instanceConfiguration.Name));
