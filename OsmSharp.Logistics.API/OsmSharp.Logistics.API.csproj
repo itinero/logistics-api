@@ -7,8 +7,8 @@
     <ProjectGuid>{FB4BC071-C097-4B58-B71D-FC28D4445D94}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OsmSharp.Routing.API</RootNamespace>
-    <AssemblyName>OsmSharp.Routing.API</AssemblyName>
+    <RootNamespace>OsmSharp.Logistics.API</RootNamespace>
+    <AssemblyName>OsmSharp.Logistics.API</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

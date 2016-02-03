@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsmSharp.Routing.API", "OsmSharp.Routing.API\OsmSharp.Routing.API.csproj", "{FB4BC071-C097-4B58-B71D-FC28D4445D94}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsmSharp.Logistics.API", "OsmSharp.Logistics.API\OsmSharp.Logistics.API.csproj", "{FB4BC071-C097-4B58-B71D-FC28D4445D94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsmSharp.Routing.API.SelfHost", "OsmSharp.Routing.API.SelfHost\OsmSharp.Routing.API.SelfHost.csproj", "{D2DB391A-CBE8-4BC9-B665-292FF9E80894}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsmSharp.Logistics.API.SelfHost", "OsmSharp.Logistics.API.SelfHost\OsmSharp.Logistics.API.SelfHost.csproj", "{D2DB391A-CBE8-4BC9-B665-292FF9E80894}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

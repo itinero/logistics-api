@@ -22,7 +22,7 @@ using OsmSharp.Geo.Features;
 using System;
 using System.IO;
 
-namespace OsmSharp.Routing.API.Reponses
+namespace OsmSharp.Logistics.API.Reponses
 {
     /// <summary>
     /// A GeoJSON response.

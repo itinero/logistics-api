@@ -17,13 +17,14 @@
 // along with OsmSharp. If not, see <http://www.gnu.org/licenses/>.
 
 using Nancy;
-using OsmSharp.Routing.API.Configurations;
+using OsmSharp.Logistics.API.Configurations;
+using OsmSharp.Routing;
 using OsmSharp.Routing.Osm.Vehicles;
 using System;
 using System.Configuration;
 using System.IO;
 
-namespace OsmSharp.Routing.API
+namespace OsmSharp.Logistics.API
 {
     /// <summary>
     /// A bootstrapper.

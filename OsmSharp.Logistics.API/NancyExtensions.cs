@@ -18,7 +18,7 @@
 
 using Nancy;
 
-namespace OsmSharp.Routing.API
+namespace OsmSharp.Logistics.API
 {
     /// <summary>
     /// Contains extensions for nancy.

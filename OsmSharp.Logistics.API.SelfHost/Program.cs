@@ -16,31 +16,28 @@
 // You should have received a copy of the GNU General Public License
 // along with OsmSharp. If not, see <http://www.gnu.org/licenses/>.
 
-using System.Configuration;
+using Nancy.Hosting.Self;
+using System;
 
-namespace OsmSharp.Routing.API.Configurations
+namespace OsmSharp.Logistics.API.SelfHost
 {
-    /// <summary>
-    /// Represents a configuration for one routing instance inside an existing API.
-    /// </summary>
-    public class InstanceConfiguration : ConfigurationElement
+    class Program
     {
-        /// <summary>
-        /// Returns the file to load the routing data from.
-        /// </summary>
-        [ConfigurationProperty("routerdb", IsRequired = false)]
-        public string RouterDb
+        static void Main(string[] args)
         {
-            get { return this["routerdb"] as string; }
-        }
+            // start from configuration.
+            Bootstrapper.BootFromConfiguration();
 
-        /// <summary>
-        /// Returns the name of this instance.
-        /// </summary>
-        [ConfigurationProperty("name", IsRequired = true)]
-        public string Name
-        {
-            get { return this["name"] as string; }
+            // start listening.
+            var uri = new Uri("http://localhost:1234");
+            using (var host = new NancyHost(uri))
+            {
+                host.Start();
+
+                Console.WriteLine("The OsmSharp routing service is running at " + uri);
+                Console.WriteLine("Press [Enter] to close.");
+                Console.ReadLine();
+            }
         }
     }
 }

@@ -19,12 +19,13 @@
 using Nancy;
 using Nancy.Json;
 using Nancy.ModelBinding;
+using OsmSharp.Routing;
 using OsmSharp.Math.Geo;
 using OsmSharp.Routing.Profiles;
 using System;
 using System.Collections.Generic;
 
-namespace OsmSharp.Routing.API
+namespace OsmSharp.Logistics.API
 {
     /// <summary>
     /// The routing module.

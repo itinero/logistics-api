@@ -18,7 +18,7 @@
 
 using System.Configuration;
 
-namespace OsmSharp.Routing.API.Configurations
+namespace OsmSharp.Logistics.API.Configurations
 {
     /// <summary>
     /// Represents a collection of instance configurations.

@@ -19,10 +19,11 @@
 using OsmSharp.Collections.Tags;
 using OsmSharp.Geo;
 using OsmSharp.Geo.Features;
+using OsmSharp.Routing;
 using OsmSharp.Routing.Profiles;
 using System.Collections.Generic;
 
-namespace OsmSharp.Routing.API.Instances
+namespace OsmSharp.Logistics.API.Instances
 {
     /// <summary>
     /// A default routing module instance implemenation.

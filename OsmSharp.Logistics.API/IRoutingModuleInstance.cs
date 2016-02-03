@@ -16,43 +16,34 @@
 // You should have received a copy of the GNU General Public License
 // along with OsmSharp. If not, see <http://www.gnu.org/licenses/>.
 
+using OsmSharp.Geo;
+using OsmSharp.Geo.Features;
+using OsmSharp.Routing;
+using OsmSharp.Routing.Profiles;
 using System.Collections.Generic;
 
-namespace OsmSharp.Routing.API
+namespace OsmSharp.Logistics.API
 {
     /// <summary>
-    /// The bootstrapper for the routing module.
+    /// Abstract representation of the routing module functionality.
     /// </summary>
-    public class RoutingBootstrapper
+    public interface IRoutingModuleInstance
     {
         /// <summary>
-        /// Holds the routing service instances.
+        /// Returns true if the given profile is supported.
         /// </summary>
-        private static Dictionary<string, IRoutingModuleInstance> _instances =
-            new Dictionary<string, IRoutingModuleInstance>();
+        bool Supports(Profile profile);
 
         /// <summary>
-        /// Returns true if the given instance is active.
+        /// Calculates a route along the given locations.
         /// </summary>
-        public static bool IsActive(string name)
-        {
-            return _instances.ContainsKey(name);
-        }
+        Result<Route> Calculate(Profile profile, ICoordinate[] locations, 
+            Dictionary<string, object> parameters);
 
         /// <summary>
-        /// Returns the routing module instance with the given name.
+        /// Calculates a route along the given locations and returns it's geometry.
         /// </summary>
-        public static IRoutingModuleInstance Get(string name)
-        {
-            return _instances[name];
-        }
-
-        /// <summary>
-        /// Registers a new instance.
-        /// </summary>
-        public static void Register(string name, IRoutingModuleInstance instance)
-        {
-            _instances[name] = instance;
-        }
+        Result<Feature> CalculateGeometry(Profile profile, ICoordinate[] locations, 
+            Dictionary<string, object> parameters);
     }
 }

@@ -16,18 +16,10 @@
 // You should have received a copy of the GNU General Public License
 // along with OsmSharp. If not, see <http://www.gnu.org/licenses/>.
 
-namespace OsmSharp.Routing.API.Domain
+namespace OsmSharp.Logistics.API.Domain
 {
-    class UrlParametersRequest
+    class Profile
     {
-        public string loc { get; set; }
-
-        public string profile { get; set; }
-
-        public string sort { get; set; }
-
-        public string format { get; set; }
-
-        public string aggregate { get; set; }
+        public string name { get; set; }
     }
 }

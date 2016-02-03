@@ -19,11 +19,11 @@
 using Nancy;
 using Nancy.Responses.Negotiation;
 using OsmSharp.Geo.Features;
-using OsmSharp.Routing.API.Reponses;
+using OsmSharp.Logistics.API.Reponses;
 using System;
 using System.Collections.Generic;
 
-namespace OsmSharp.Routing.API.Responses
+namespace OsmSharp.Logistics.API.Responses
 {
     /// <summary>
     /// A response processor to format GeoJSON.

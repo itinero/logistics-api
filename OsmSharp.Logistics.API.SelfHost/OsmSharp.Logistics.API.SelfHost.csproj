@@ -7,8 +7,8 @@
     <ProjectGuid>{D2DB391A-CBE8-4BC9-B665-292FF9E80894}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OsmSharp.Routing.API.SelfHost</RootNamespace>
-    <AssemblyName>OsmSharp.Routing.API.SelfHost</AssemblyName>
+    <RootNamespace>OsmSharp.Logistics.API.SelfHost</RootNamespace>
+    <AssemblyName>OsmSharp.Logistics.API.SelfHost</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -113,9 +113,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OsmSharp.Routing.API\OsmSharp.Routing.API.csproj">
+    <ProjectReference Include="..\OsmSharp.Logistics.API\OsmSharp.Logistics.API.csproj">
       <Project>{fb4bc071-c097-4b58-b71d-fc28d4445d94}</Project>
-      <Name>OsmSharp.Routing.API</Name>
+      <Name>OsmSharp.Logistics.API</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

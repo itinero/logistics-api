@@ -16,33 +16,43 @@
 // You should have received a copy of the GNU General Public License
 // along with OsmSharp. If not, see <http://www.gnu.org/licenses/>.
 
-using OsmSharp.Geo;
-using OsmSharp.Geo.Features;
-using OsmSharp.Routing.Profiles;
 using System.Collections.Generic;
 
-namespace OsmSharp.Routing.API
+namespace OsmSharp.Logistics.API
 {
     /// <summary>
-    /// Abstract representation of the routing module functionality.
+    /// The bootstrapper for the routing module.
     /// </summary>
-    public interface IRoutingModuleInstance
+    public class RoutingBootstrapper
     {
         /// <summary>
-        /// Returns true if the given profile is supported.
+        /// Holds the routing service instances.
         /// </summary>
-        bool Supports(Profile profile);
+        private static Dictionary<string, IRoutingModuleInstance> _instances =
+            new Dictionary<string, IRoutingModuleInstance>();
 
         /// <summary>
-        /// Calculates a route along the given locations.
+        /// Returns true if the given instance is active.
         /// </summary>
-        Result<Route> Calculate(Profile profile, ICoordinate[] locations, 
-            Dictionary<string, object> parameters);
+        public static bool IsActive(string name)
+        {
+            return _instances.ContainsKey(name);
+        }
 
         /// <summary>
-        /// Calculates a route along the given locations and returns it's geometry.
+        /// Returns the routing module instance with the given name.
         /// </summary>
-        Result<Feature> CalculateGeometry(Profile profile, ICoordinate[] locations, 
-            Dictionary<string, object> parameters);
+        public static IRoutingModuleInstance Get(string name)
+        {
+            return _instances[name];
+        }
+
+        /// <summary>
+        /// Registers a new instance.
+        /// </summary>
+        public static void Register(string name, IRoutingModuleInstance instance)
+        {
+            _instances[name] = instance;
+        }
     }
 }
