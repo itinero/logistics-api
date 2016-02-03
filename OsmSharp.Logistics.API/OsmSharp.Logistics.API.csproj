@@ -60,17 +60,25 @@
       <HintPath>..\packages\Nancy.Hosting.Self.1.4.1\lib\net40\Nancy.Hosting.Self.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OsmSharp, Version=1.2.0.118, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OsmSharp.Core.1.2.0-rc1-0118\lib\net45\OsmSharp.dll</HintPath>
+    <Reference Include="OsmSharp, Version=1.3.0.119, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OsmSharp.Core.1.3.0-rc1-0119\lib\net45\OsmSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OsmSharp.Osm, Version=1.2.0.118, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OsmSharp.Core.1.2.0-rc1-0118\lib\net45\OsmSharp.Osm.dll</HintPath>
+    <Reference Include="OsmSharp.Logistics, Version=0.0.1.89, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OsmSharp.Logistics.0.0.1.89-beta\lib\net45\OsmSharp.Logistics.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OsmSharp.Routing, Version=0.2.0.128, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\routing\Output\OsmSharp.Routing.dll</HintPath>
+    <Reference Include="OsmSharp.Logistics.Routing, Version=0.0.1.89, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OsmSharp.Logistics.0.0.1.89-beta\lib\net45\OsmSharp.Logistics.Routing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OsmSharp.Osm, Version=1.3.0.119, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OsmSharp.Core.1.3.0-rc1-0119\lib\net45\OsmSharp.Osm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OsmSharp.Routing, Version=0.3.1.132, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OsmSharp.Routing.0.3.1-rc1-0132\lib\net45\OsmSharp.Routing.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="OsmSharp.UI, Version=0.0.0.1084, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OsmSharp.UI.0.0.0.1084-beta\lib\net45\OsmSharp.UI.dll</HintPath>
