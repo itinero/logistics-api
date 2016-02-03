@@ -75,7 +75,7 @@ namespace OsmSharp.Logistics.API.TSP
                 // try and get all this data from the request-data.
                 GeoCoordinate[] coordinates = null;
                 var profile = OsmSharp.Routing.Osm.Vehicles.Vehicle.Car.Fastest();
-                var closed = false;
+                bool? closed = null;
                 var fullFormat = false;
 
                 // bind the query if any.
@@ -169,7 +169,8 @@ namespace OsmSharp.Logistics.API.TSP
                 }
 
                 // calculate route.
-                var route = TSPBootstrapper.Get(instance).Calculate(profile, coordinates, new Dictionary<string, object>());
+                var route = TSPBootstrapper.Get(instance).Calculate(profile, coordinates, closed,
+                    new Dictionary<string, object>());
                 if (route == null ||
                     route.IsError)
                 { // route could not be calculated.

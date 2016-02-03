@@ -21,6 +21,7 @@ using OsmSharp.Geo.Features;
 using OsmSharp.Routing.Profiles;
 using OsmSharp.Routing;
 using System.Collections.Generic;
+using OsmSharp.Math.Geo;
 
 namespace OsmSharp.Logistics.API.TSP
 {
@@ -37,13 +38,7 @@ namespace OsmSharp.Logistics.API.TSP
         /// <summary>
         /// Calculates a route along the given locations.
         /// </summary>
-        Result<Route> Calculate(Profile profile, ICoordinate[] locations,
-            Dictionary<string, object> parameters);
-
-        /// <summary>
-        /// Calculates a route along the given locations and returns it's geometry.
-        /// </summary>
-        Result<Feature> CalculateGeometry(Profile profile, ICoordinate[] locations,
+        Result<Route> Calculate(Profile profile, GeoCoordinate[] locations, bool? closed,
             Dictionary<string, object> parameters);
     }
 }

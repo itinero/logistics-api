@@ -19,8 +19,12 @@
 using OsmSharp.Collections.Tags;
 using OsmSharp.Geo;
 using OsmSharp.Geo.Features;
+using OsmSharp.Logistics.Routing.TSP;
+using OsmSharp.Math.Geo;
 using OsmSharp.Routing;
+using OsmSharp.Routing.Algorithms;
 using OsmSharp.Routing.Profiles;
+using System;
 using System.Collections.Generic;
 
 namespace OsmSharp.Logistics.API.TSP.Instances
@@ -31,13 +35,28 @@ namespace OsmSharp.Logistics.API.TSP.Instances
     public class DefaultTSPModuleInstance : ITSPModuleInstance
     {
         private readonly IRouter _router;
+        private readonly Func<Profile, GeoCoordinate[], IWeightMatrixAlgorithm> _createMatrixCalculator;
+
+        /// <summary>
+        /// Creates a new default routing instance.
+        /// </summary>
+        public DefaultTSPModuleInstance(IRouter router, Func<Profile, GeoCoordinate[], IWeightMatrixAlgorithm> createMatrixCalculator)
+        {
+            _router = router;
+            _createMatrixCalculator = createMatrixCalculator;
+        }
 
         /// <summary>
         /// Creates a new default routing instance.
         /// </summary>
         public DefaultTSPModuleInstance(IRouter router)
+            : this(router, (vehicle, locations) =>
+            { 
+                return new OsmSharp.Routing.Algorithms.WeightMatrixAlgorithm(
+                    router, vehicle, locations);
+            })
         {
-            _router = router;
+
         }
 
         /// <summary>
@@ -51,53 +70,46 @@ namespace OsmSharp.Logistics.API.TSP.Instances
         /// <summary>
         /// Calculates a route along the given locations.
         /// </summary>
-        public Result<Route> Calculate(Profile profile, ICoordinate[] locations,
+        public Result<Route> Calculate(Profile profile, GeoCoordinate[] locations, bool? closed,
             Dictionary<string, object> parameters)
         {
-            var routerPoints = new RouterPoint[locations.Length];
-            for (var i = 0; i < routerPoints.Length; i++)
-            {
-                var resolveResult = _router.TryResolve(profile, locations[i], 500);
-                if (resolveResult.IsError)
-                {
-                    return resolveResult.ConvertError<Route>();
-                }
-                routerPoints[i] = resolveResult.Value;
+            // create matrix calculator.
+            var matrixCalculator = _createMatrixCalculator(profile, locations);
+            matrixCalculator.Run();
+
+            // check success.
+            if (!matrixCalculator.HasSucceeded)
+            { // weight matrix calculation failed.
+                return new Result<Route>("Calculating weight matrix failed.");
             }
 
-            return _router.TryCalculate(profile, routerPoints);
-        }
-
-        /// <summary>
-        /// Calculates a route along the given locations and returns it's geometry.
-        /// </summary>
-        public Result<Feature> CalculateGeometry(Profile profile, ICoordinate[] locations,
-            Dictionary<string, object> parameters)
-        {
-            var routerPoints = new RouterPoint[locations.Length];
-            for (var i = 0; i < routerPoints.Length; i++)
+            // verify minimum results.
+            if (matrixCalculator.RouterPoints.Count < 1 ||
+                matrixCalculator.Errors.ContainsKey(0))
             {
-                var resolveResult = _router.TryResolve(profile, locations[i], 500);
-                if (resolveResult.IsError)
-                {
-                    return resolveResult.ConvertError<Feature>();
-                }
-                routerPoints[i] = resolveResult.Value;
+                return new Result<Route>("Calculating weight matrix failed.");
             }
 
-            var result = _router.TryCalculate(profile, routerPoints);
-            if (result.IsError)
-            {
-                return result.ConvertError<Feature>();
+            // create TSP router.
+            int? last = locations.Length - 1;
+            if(closed.HasValue && closed.Value)
+            { // problem is closed.
+                last = 0;
+            }
+            else
+            { // problem is open.
+                last = null;
+            }
+            var tspRouter = new TSPRouter(_router, profile, locations, 0, last, matrixCalculator);
+            tspRouter.Run();
+            
+            // check success.
+            if (!tspRouter.HasSucceeded)
+            { // weight matrix calculation failed.
+                return new Result<Route>("Calculating final route failed.");
             }
 
-            var lineString = result.Value.ToLineString();
-            return new Result<Feature>(new Feature(lineString,
-                new Geo.Attributes.SimpleGeometryAttributeCollection(
-                    new Tag[] {
-                        new Tag("time", result.Value.TotalTime.ToInvariantString()),
-                        new Tag("distance", result.Value.TotalDistance.ToInvariantString()),
-                    })));
+            return new Result<Route>(tspRouter.BuildRoute());
         }
     }
 }

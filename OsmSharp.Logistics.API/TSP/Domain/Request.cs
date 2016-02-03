@@ -23,6 +23,6 @@ namespace OsmSharp.Logistics.API.TSP.Domain
         public double[][] locations { get; set; }
         public Profile profile { get; set; }
         public string format { get; set; }
-        public bool closed { get; set; }
+        public bool? closed { get; set; }
     }
 }
