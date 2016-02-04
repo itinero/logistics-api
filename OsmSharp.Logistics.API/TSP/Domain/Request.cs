@@ -21,6 +21,7 @@ namespace OsmSharp.Logistics.API.TSP.Domain
     class Request
     {
         public double[][] locations { get; set; }
+        public string[][] tags { get; set; }
         public Profile profile { get; set; }
         public string format { get; set; }
         public bool? closed { get; set; }

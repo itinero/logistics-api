@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OsmSharp.Logistics.API</RootNamespace>
     <AssemblyName>OsmSharp.Logistics.API</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,27 +66,27 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OsmSharp.Logistics, Version=0.0.1.89, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OsmSharp.Logistics.0.0.1.89-beta\lib\net45\OsmSharp.Logistics.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bwaste\logistics\Output\OsmSharp.Logistics.dll</HintPath>
     </Reference>
     <Reference Include="OsmSharp.Logistics.Routing, Version=0.0.1.89, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OsmSharp.Logistics.0.0.1.89-beta\lib\net45\OsmSharp.Logistics.Routing.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bwaste\logistics\Output\OsmSharp.Logistics.Routing.dll</HintPath>
     </Reference>
     <Reference Include="OsmSharp.Osm, Version=1.3.0.119, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OsmSharp.Core.1.3.0-rc1-0119\lib\net45\OsmSharp.Osm.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OsmSharp.Routing, Version=0.3.1.132, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OsmSharp.Routing.0.3.1-rc1-0132\lib\net45\OsmSharp.Routing.dll</HintPath>
+    <Reference Include="OsmSharp.Routing, Version=0.4.2.135, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OsmSharp.Routing.0.4.2-rc1-0135\lib\net45\OsmSharp.Routing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OsmSharp.UI, Version=0.0.0.1084, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OsmSharp.UI.0.0.0.1084-beta\lib\net45\OsmSharp.UI.dll</HintPath>
+    <Reference Include="OsmSharp.UI, Version=0.0.0.1106, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OsmSharp.UI.0.0.0.1106\lib\net45\OsmSharp.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OsmSharp.WinForms.UI, Version=0.0.0.1084, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OsmSharp.UI.0.0.0.1084-beta\lib\net45\OsmSharp.WinForms.UI.dll</HintPath>
+    <Reference Include="OsmSharp.WinForms.UI, Version=0.0.0.1106, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OsmSharp.UI.0.0.0.1106\lib\net45\OsmSharp.WinForms.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">

@@ -1,5 +1,5 @@
 ﻿// OsmSharp - OpenStreetMap (OSM) SDK
-// Copyright (C) 2015 Abelshausen Ben
+// Copyright (C) 2016 Abelshausen Ben
 // 
 // This file is part of OsmSharp.
 // 
@@ -24,6 +24,7 @@ using OsmSharp.Math.Geo;
 using OsmSharp.Routing.Profiles;
 using System;
 using System.Collections.Generic;
+using OsmSharp.Collections.Tags;
 
 namespace OsmSharp.Logistics.API.TSP
 {
@@ -77,6 +78,7 @@ namespace OsmSharp.Logistics.API.TSP
                 var profile = OsmSharp.Routing.Osm.Vehicles.Vehicle.Car.Fastest();
                 bool? closed = null;
                 var fullFormat = false;
+                var tags = new TagsCollection[0];
 
                 // bind the query if any.
                 if (this.Request.Body == null || this.Request.Body.Length == 0)
@@ -141,6 +143,25 @@ namespace OsmSharp.Logistics.API.TSP
                         coordinates[idx] = new GeoCoordinate(request.locations[idx][1], request.locations[idx][0]);
                     }
 
+                    if (request.tags != null)
+                    { // parse tags.
+                        tags = new TagsCollection[request.tags.Length];
+                        for (var i = 0; i < request.tags.Length; i++)
+                        {
+                            var locationTag = request.tags[i];
+                            if (locationTag != null)
+                            {
+                                var locationTagCollection = new TagsCollection();
+                                for (var t = 1; t < locationTag.Length; t += 2)
+                                {
+                                    locationTagCollection.Add(locationTag[0],
+                                        locationTag[1]);
+                                }
+                                tags[i] = locationTagCollection;
+                            }
+                        }
+                    }
+
                     // get vehicle.
                     string profileName = "car"; // assume car is the default.
                     if (request.profile != null && !string.IsNullOrWhiteSpace(request.profile.name))
@@ -169,7 +190,7 @@ namespace OsmSharp.Logistics.API.TSP
                 }
 
                 // calculate route.
-                var route = TSPBootstrapper.Get(instance).Calculate(profile, coordinates, closed,
+                var route = TSPBootstrapper.Get(instance).Calculate(profile, coordinates, tags, closed,
                     new Dictionary<string, object>());
                 if (route == null ||
                     route.IsError)

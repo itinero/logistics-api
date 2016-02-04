@@ -20,6 +20,7 @@ using OsmSharp.Collections.Tags;
 using OsmSharp.Geo;
 using OsmSharp.Geo.Features;
 using OsmSharp.Logistics.Routing.TSP;
+using OsmSharp.Logistics.Solutions.TSP.GA.EAX;
 using OsmSharp.Math.Geo;
 using OsmSharp.Routing;
 using OsmSharp.Routing.Algorithms;
@@ -34,13 +35,13 @@ namespace OsmSharp.Logistics.API.TSP.Instances
     /// </summary>
     public class DefaultTSPModuleInstance : ITSPModuleInstance
     {
-        private readonly IRouter _router;
+        private readonly Router _router;
         private readonly Func<Profile, GeoCoordinate[], IWeightMatrixAlgorithm> _createMatrixCalculator;
 
         /// <summary>
         /// Creates a new default routing instance.
         /// </summary>
-        public DefaultTSPModuleInstance(IRouter router, Func<Profile, GeoCoordinate[], IWeightMatrixAlgorithm> createMatrixCalculator)
+        public DefaultTSPModuleInstance(Router router, Func<Profile, GeoCoordinate[], IWeightMatrixAlgorithm> createMatrixCalculator)
         {
             _router = router;
             _createMatrixCalculator = createMatrixCalculator;
@@ -49,9 +50,9 @@ namespace OsmSharp.Logistics.API.TSP.Instances
         /// <summary>
         /// Creates a new default routing instance.
         /// </summary>
-        public DefaultTSPModuleInstance(IRouter router)
+        public DefaultTSPModuleInstance(Router router)
             : this(router, (vehicle, locations) =>
-            { 
+            {
                 return new OsmSharp.Routing.Algorithms.WeightMatrixAlgorithm(
                     router, vehicle, locations);
             })
@@ -70,11 +71,36 @@ namespace OsmSharp.Logistics.API.TSP.Instances
         /// <summary>
         /// Calculates a route along the given locations.
         /// </summary>
-        public Result<Route> Calculate(Profile profile, GeoCoordinate[] locations, bool? closed,
+        public Result<Route> Calculate(Profile profile, GeoCoordinate[] locations, TagsCollection[] tags, bool? closed,
             Dictionary<string, object> parameters)
         {
             // create matrix calculator.
-            var matrixCalculator = _createMatrixCalculator(profile, locations);
+            var matrixCalculator = new WeightMatrixAlgorithm(
+                _router, profile, locations, (edge, i) =>
+                {
+                    if (tags.Length > 0)
+                    {
+                        var edgeTags = _router.Db.GetProfileAndMeta(
+                            edge.Data.Profile, edge.Data.MetaId);
+                        var locationTags = tags[i];
+                        string locationName;
+                        string edgeName;
+                        if (edgeTags.TryGetValue("name", out edgeName) &&
+                                locationTags.TryGetValue("name", out locationName))
+                        {
+                            if (!string.IsNullOrWhiteSpace(edgeName) &&
+                                   !string.IsNullOrWhiteSpace(locationName))
+                            {
+                                if (edgeName.LevenshteinMatch(locationName, 90))
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    }
+                    return true;
+                });
             matrixCalculator.Run();
 
             // check success.
@@ -92,15 +118,24 @@ namespace OsmSharp.Logistics.API.TSP.Instances
 
             // create TSP router.
             int? last = locations.Length - 1;
-            if(closed.HasValue && closed.Value)
+            if (closed.HasValue && closed.Value)
             { // problem is closed.
                 last = 0;
             }
-            else
+            else if (closed.HasValue && !closed.Value)
             { // problem is open.
                 last = null;
             }
-            var tspRouter = new TSPRouter(_router, profile, locations, 0, last, matrixCalculator);
+            var tspRouter = new TSPRouter(_router, profile, locations, 0, last, 
+                new EAXSolver(new OsmSharp.Logistics.Solvers.GA.GASettings()
+                {
+                    CrossOverPercentage = 20,
+                    ElitismPercentage = 3,
+                    PopulationSize = 500,
+                    MaxGenerations = 100000,
+                    MutationPercentage = 0,
+                    StagnationCount = 200
+                }), matrixCalculator);
             tspRouter.Run();
             
             // check success.
