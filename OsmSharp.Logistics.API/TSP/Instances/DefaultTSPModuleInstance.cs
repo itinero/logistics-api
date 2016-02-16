@@ -129,12 +129,12 @@ namespace OsmSharp.Logistics.API.TSP.Instances
             var tspRouter = new TSPRouter(_router, profile, locations, 0, last, 
                 new EAXSolver(new OsmSharp.Logistics.Solvers.GA.GASettings()
                 {
-                    CrossOverPercentage = 20,
+                    CrossOverPercentage = 10,
                     ElitismPercentage = 3,
-                    PopulationSize = 500,
+                    PopulationSize = 300,
                     MaxGenerations = 100000,
                     MutationPercentage = 0,
-                    StagnationCount = 200
+                    StagnationCount = 100
                 }), matrixCalculator);
             tspRouter.Run();
             
