@@ -101,6 +101,7 @@ namespace OsmSharp.Logistics.API.TSP.Instances
                     }
                     return true;
                 });
+            matrixCalculator.SearchDistanceInMeter = 200;
             matrixCalculator.Run();
 
             // check success.
@@ -130,7 +131,7 @@ namespace OsmSharp.Logistics.API.TSP.Instances
                 new EAXSolver(new OsmSharp.Logistics.Solvers.GA.GASettings()
                 {
                     CrossOverPercentage = 10,
-                    ElitismPercentage = 3,
+                    ElitismPercentage = 2,
                     PopulationSize = 300,
                     MaxGenerations = 100000,
                     MutationPercentage = 0,

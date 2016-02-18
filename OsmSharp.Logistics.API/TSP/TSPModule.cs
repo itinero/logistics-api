@@ -195,7 +195,7 @@ namespace OsmSharp.Logistics.API.TSP
                 if (route == null ||
                     route.IsError)
                 { // route could not be calculated.
-                    return null;
+                    return Negotiate.WithStatusCode(HttpStatusCode.InternalServerError);
                 }
 
                 if (fullFormat)
