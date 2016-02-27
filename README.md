@@ -1,2 +1,3 @@
 # logistics-api
-An HTTP logistical optimization API based on OsmSharp.Routing and OsmSharp.Logistics.
+
+A logistical optimization API based on Itinero and Itinero.Logistics.
